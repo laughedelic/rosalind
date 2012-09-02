@@ -9,11 +9,13 @@ def updMap[K,V](m: Map[K,V], key: K, f: V => V): Map[K,V] =
 
 //// Counting Bases: http://rosalind.info/problems/acgu/ ///////////////////////
 // Given: An RNA string s of length at most 1000 nt.
-// Return: Four integers corresponding to the number of times that the symbols A, C, G, and U occur in s.
+// Return: Four integers corresponding to the number of times 
+//		   that the symbols A, C, G, and U occur in s.
 
-def countBases(rna: String): Map[Char, Int] =
-	rna.foldLeft(Map('A' -> 0, 'C' -> 0, 'G' -> 0, 'U' -> 0))(
-        (acc, x) => updMap(acc, x, (_:Int) + 1) )
+def countBases(rna: String): Map[Char, Int] = {
+	val bases = Map('A' -> 0, 'C' -> 0, 'G' -> 0, 'U' -> 0)
+	rna.foldLeft(bases)( (acc, x) => updMap(acc, x, (_:Int) + 1) )
+}
 
 def acgu(rna: String): String = countBases(rna).values.mkString(" ")
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,4 +32,19 @@ def revc(dna: String): String =
         case 'C' => 'G'
         case 'G' => 'C'
     })
+////////////////////////////////////////////////////////////////////////////////
+
+//// Substrings: http://rosalind.info/problems/subs/ ///////////////////////////
+// Given: Two DNA strings s and t (each of length at most 1 kbp).
+// Return: All locations of t as a substring of s.
+
+def findSubstrings(s: String, t:String): List[Int] = {
+	if(s.length < t.length) Nil
+	else {
+		val rest = findSubstrings(s.tail, t).map(_ + 1)
+		if(t == s.take(t.length)) 1 :: rest else rest
+	}
+}
+
+def subs(s: String, t:String): String = findSubstrings(s, t).mkString(" ")
 ////////////////////////////////////////////////////////////////////////////////
