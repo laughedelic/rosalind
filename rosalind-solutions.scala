@@ -34,6 +34,7 @@ def revc(dna: String): String =
     })
 ////////////////////////////////////////////////////////////////////////////////
 
+
 //// Substrings: http://rosalind.info/problems/subs/ ///////////////////////////
 // Given: Two DNA strings s and t (each of length at most 1 kbp).
 // Return: All locations of t as a substring of s.
@@ -47,4 +48,16 @@ def findSubstrings(s: String, t:String): List[Int] = {
 }
 
 def subs(s: String, t:String): String = findSubstrings(s, t).mkString(" ")
+////////////////////////////////////////////////////////////////////////////////
+
+
+//// RNA Transcription: http://rosalind.info/problems/rna/ /////////////////////
+// Given: A DNA string t (of length at most 1 kbp).
+// Return: The transcribed RNA string of t (all T's are replaced with U's).
+
+def rna(dna: String): String = 
+	dna.map(b => b match {
+		case 'T' => 'U'
+		case  x  =>  x
+	})
 ////////////////////////////////////////////////////////////////////////////////
